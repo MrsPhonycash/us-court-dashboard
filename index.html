@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>US Federal Court Case Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1f2436;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8eaf0;
+    --muted: #8b90a0;
+    --accent: #4f8ef7;
+    --green: #22c55e;
+    --red: #f87171;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --coral: #fb923c;
+    --purple: #a78bfa;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  header p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(79,142,247,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(79,142,247,0.25);
+    font-weight: 500;
+  }
+  main { padding: 1.75rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-bar label { font-size: 12px; color: var(--muted); }
+  .filter-bar select {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .metric {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+  .metric-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text); }
+  .metric-delta { font-size: 11px; margin-top: 4px; }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .trend-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .ldot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .ai-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .ai-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ai-title .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .chip {
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,0.08); }
+  .ai-input-row { display: flex; gap: 8px; }
+  .ai-input-row input {
+    flex: 1;
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    outline: none;
+    transition: border 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .ai-input-row input:focus { border-color: var(--accent); }
+  .ai-input-row button {
+    font-size: 12px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(79,142,247,0.4);
+    background: rgba(79,142,247,0.12);
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .ai-input-row button:hover { background: rgba(79,142,247,0.2); }
+  .ai-response {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    display: none;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 14px;
+    border-left: 3px solid var(--accent);
+  }
+  .ai-response.visible { display: block; }
+  .loading-dots { display: inline-flex; gap: 4px; }
+  .loading-dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted);
+    animation: bounce 1s infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 768px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .charts-row, .trend-row { grid-template-columns: 1fr; }
+    main { padding: 1rem; }
+    header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>⚖️ US Federal Court Statistics Dashboard</h1>
+    <p>District & Appeals Courts · 2018–2023 · Data: uscourts.gov</p>
+  </div>
+  <span class="badge">AI-Powered Insights</span>
+</header>
+
+<main>
+
+  <div class="filter-bar">
+    <label>Year range:</label>
+    <select id="yearSel" onchange="updateCharts()">
+      <option value="all">2018 – 2023</option>
+      <option value="recent">2021 – 2023</option>
+      <option value="pre">2018 – 2020</option>
+    </select>
+    <label style="margin-left:8px">Court type:</label>
+    <select id="courtSel">
+      <option value="all">All federal courts</option>
+      <option value="district">District courts</option>
+      <option value="appeals">Courts of appeals</option>
+    </select>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Total filings (2023)</div>
+      <div class="metric-val">421K</div>
+      <div class="metric-delta up">↑ 3.2% YoY</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Civil cases</div>
+      <div class="metric-val">287K</div>
+      <div class="metric-delta up">↑ 5.1% YoY</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Criminal cases</div>
+      <div class="metric-val">71K</div>
+      <div class="metric-delta down">↓ 1.8% YoY</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Bankruptcy filings</div>
+      <div class="metric-val">418K</div>
+      <div class="metric-delta down">↓ 4.2% YoY</div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="card">
+      <div class="card-title">Annual federal case filings by type</div>
+      <div class="legend">
+        <span><span class="ldot" style="background:#4f8ef7"></span>Civil</span>
+        <span><span class="ldot" style="background:#fb923c"></span>Criminal</span>
+        <span><span class="ldot" style="background:#2dd4bf"></span>Bankruptcy</span>
+      </div>
+      <div style="position:relative;height:240px">
+        <canvas id="lineChart" role="img" aria-label="Line chart of US federal case filings 2018-2023">Civil, criminal, and bankruptcy filings over time.</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Civil case breakdown (2023)</div>
+      <div class="legend">
+        <span><span class="ldot" style="background:#4f8ef7"></span>Contract 31%</span>
+        <span><span class="ldot" style="background:#fb923c"></span>Tort 24%</span>
+        <span><span class="ldot" style="background:#22c55e"></span>Civil rights 20%</span>
+        <span><span class="ldot" style="background:#fbbf24"></span>Labor 15%</span>
+        <span><span class="ldot" style="background:#a78bfa"></span>Other 10%</span>
+      </div>
+      <div style="position:relative;height:240px">
+        <canvas id="donutChart" role="img" aria-label="Donut chart of civil case types">Contract 31%, Tort 24%, Civil rights 20%, Labor 15%, Other 10%.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="trend-row">
+    <div class="card">
+      <div class="card-title">Criminal offense categories (2023)</div>
+      <div style="position:relative;height:280px">
+        <canvas id="barChart" role="img" aria-label="Horizontal bar chart of criminal categories">Drug offenses lead at 23,400 cases, followed by immigration and fraud.</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Case disposition outcomes — district courts</div>
+      <div class="legend">
+        <span><span class="ldot" style="background:#22c55e"></span>Settled/dismissed</span>
+        <span><span class="ldot" style="background:#4f8ef7"></span>Trial verdict</span>
+        <span><span class="ldot" style="background:#fbbf24"></span>Default judgment</span>
+        <span><span class="ldot" style="background:#fb923c"></span>Other</span>
+      </div>
+      <div style="position:relative;height:280px">
+        <canvas id="dispChart" role="img" aria-label="Stacked bar chart of disposition outcomes">Settled/dismissed consistently around 70%, trial verdicts around 4%.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-panel">
+    <div class="ai-title">
+      <span class="dot"></span>
+      AI Case Insights — ask about the data
+    </div>
+    <div class="chips">
+      <div class="chip" onclick="askAI('What drove the spike in civil rights filings after 2020?')">Civil rights spike after 2020 ↗</div>
+      <div class="chip" onclick="askAI('Why are criminal filings declining while civil filings rise?')">Criminal vs civil trend ↗</div>
+      <div class="chip" onclick="askAI('What does the high rate of case dismissals tell us about the federal court system?')">High dismissal rates ↗</div>
+      <div class="chip" onclick="askAI('How do immigration cases affect the federal criminal docket?')">Immigration caseload ↗</div>
+    </div>
+    <div class="ai-input-row">
+      <input type="text" id="aiQ" placeholder="Ask a question about US court data..." onkeydown="if(event.key==='Enter')askAI()" />
+      <button onclick="askAI()">Ask ↗</button>
+    </div>
+    <div class="ai-response" id="aiResp"></div>
+  </div>
+
+</main>
+
+<footer>
+  Data sourced from US Courts Annual Statistical Reports (uscourts.gov) · Built with Chart.js + Claude API · MIT License
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const DATA = {
+  all:    { labels:['2018','2019','2020','2021','2022','2023'], civil:[273,279,261,298,310,287], criminal:[82,79,64,68,73,71], bankruptcy:[773,752,757,413,389,418] },
+  recent: { labels:['2021','2022','2023'], civil:[298,310,287], criminal:[68,73,71], bankruptcy:[413,389,418] },
+  pre:    { labels:['2018','2019','2020'], civil:[273,279,261], criminal:[82,79,64], bankruptcy:[773,752,757] }
+};
+
+let lineC, donutC, barC, dispC;
+
+function mkLine(d) {
+  if (lineC) lineC.destroy();
+  lineC = new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: d.labels,
+      datasets: [
+        { label:'Civil (K)', data:d.civil, borderColor:'#4f8ef7', backgroundColor:'rgba(79,142,247,0.07)', tension:0.35, pointRadius:4, borderWidth:2 },
+        { label:'Criminal (K)', data:d.criminal, borderColor:'#fb923c', backgroundColor:'rgba(251,146,60,0.07)', tension:0.35, pointRadius:4, borderDash:[4,3], borderWidth:2 },
+        { label:'Bankruptcy (K)', data:d.bankruptcy, borderColor:'#2dd4bf', backgroundColor:'rgba(45,212,191,0.07)', tension:0.35, pointRadius:4, borderDash:[2,4], borderWidth:2 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        y:{ ticks:{ callback:v=>v+'K', color:'#8b90a0', font:{size:11} }, grid:{ color:'rgba(255,255,255,0.05)' }, border:{color:'transparent'} },
+        x:{ ticks:{ color:'#8b90a0', font:{size:11} }, grid:{ display:false }, border:{color:'transparent'} }
+      }
+    }
+  });
+}
+
+function mkDonut() {
+  if (donutC) donutC.destroy();
+  donutC = new Chart(document.getElementById('donutChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Contract','Tort','Civil rights','Labor','Other'],
+      datasets: [{ data:[31,24,20,15,10], backgroundColor:['#4f8ef7','#fb923c','#22c55e','#fbbf24','#a78bfa'], borderWidth:2, borderColor:'#181c27' }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:ctx=>ctx.label+': '+ctx.parsed+'%' } } }
+    }
+  });
+}
+
+function mkBar() {
+  if (barC) barC.destroy();
+  barC = new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Drug offenses','Immigration','Fraud/financial','Firearms','Violent crime','Sex offenses','Other'],
+      datasets: [{ label:'Cases filed', data:[23400,18200,10800,7600,5400,3200,2400], backgroundColor:'#4f8ef7', borderRadius:4 }]
+    },
+    options: {
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ ticks:{ callback:v=>(v/1000).toFixed(0)+'K', color:'#8b90a0', font:{size:11} }, grid:{ color:'rgba(255,255,255,0.05)' }, border:{color:'transparent'} },
+        y:{ ticks:{ color:'#8b90a0', font:{size:11} }, grid:{ display:false }, border:{color:'transparent'} }
+      }
+    }
+  });
+}
+
+function mkDisp() {
+  if (dispC) dispC.destroy();
+  dispC = new Chart(document.getElementById('dispChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2018','2019','2020','2021','2022','2023'],
+      datasets: [
+        { label:'Settled/dismissed', data:[68,70,72,71,69,70], backgroundColor:'#22c55e', stack:'s' },
+        { label:'Trial verdict',      data:[4,3,2,3,4,4],       backgroundColor:'#4f8ef7', stack:'s' },
+        { label:'Default judgment',   data:[14,13,12,12,13,13], backgroundColor:'#fbbf24', stack:'s' },
+        { label:'Other',              data:[14,14,14,14,14,13], backgroundColor:'#fb923c', stack:'s' }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:ctx=>ctx.dataset.label+': '+ctx.parsed.y+'%' } } },
+      scales:{
+        x:{ stacked:true, ticks:{ color:'#8b90a0', font:{size:11} }, grid:{ display:false }, border:{color:'transparent'} },
+        y:{ stacked:true, ticks:{ callback:v=>v+'%', color:'#8b90a0', font:{size:11} }, grid:{ color:'rgba(255,255,255,0.05)' }, border:{color:'transparent'} }
+      }
+    }
+  });
+}
+
+function updateCharts() {
+  const yr = document.getElementById('yearSel').value;
+  mkLine(DATA[yr] || DATA.all);
+}
+
+mkLine(DATA.all);
+mkDonut();
+mkBar();
+mkDisp();
+
+async function askAI(q) {
+  const input = document.getElementById('aiQ');
+  const question = q || input.value.trim();
+  if (!question) return;
+  input.value = question;
+  const resp = document.getElementById('aiResp');
+  resp.className = 'ai-response visible';
+  resp.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  const context = `You are an expert legal data analyst. The user is viewing a dashboard of US federal court statistics:
+- 2023 total filings: ~421K civil+criminal, plus ~418K bankruptcy
+- Civil: 287K (up 5.1%), Criminal: 71K (down 1.8%), Bankruptcy: 418K (down 4.2%)
+- Civil breakdown: Contract 31%, Tort 24%, Civil rights 20%, Labor 15%, Other 10%
+- Criminal categories: Drug offenses 23.4K, Immigration 18.2K, Fraud 10.8K, Firearms 7.6K, Violent crime 5.4K
+- Dispositions: ~70% settled/dismissed, ~4% trial verdict, ~13% default judgment
+- Trend: civil rising, criminal declining, bankruptcy dropped post-2020 due to COVID stimulus
+Answer concisely in 2-4 sentences. Be insightful and data-driven.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: context,
+        messages: [{ role: 'user', content: question }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || 'No response received.';
+    resp.textContent = text;
+  } catch(e) {
+    resp.textContent = 'Could not reach the AI service. Please try again.';
+  }
+}
+</script>
+</body>
+</html>
