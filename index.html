@@ -23,203 +23,49 @@
     --coral: #fb923c;
     --purple: #a78bfa;
   }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-  header p {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-  .badge {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: rgba(79,142,247,0.12);
-    color: var(--accent);
-    border: 1px solid rgba(79,142,247,0.25);
-    font-weight: 500;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 0; }
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+  header p { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: rgba(79,142,247,0.12); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); font-weight: 500; }
   main { padding: 1.75rem 2rem; max-width: 1200px; margin: 0 auto; }
-  .filter-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .filter-bar { display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
   .filter-bar label { font-size: 12px; color: var(--muted); }
-  .filter-bar select {
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    cursor: pointer;
-  }
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 1.5rem;
-  }
-  .metric {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-  }
+  .filter-bar select { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); cursor: pointer; }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+  .metric { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
   .metric-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
   .metric-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text); }
   .metric-delta { font-size: 11px; margin-top: 4px; }
   .up { color: var(--green); }
   .down { color: var(--red); }
-  .charts-row {
-    display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: 14px;
-    margin-bottom: 1.5rem;
-  }
-  .trend-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 1.5rem;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem;
-  }
-  .card-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 12px;
-    font-size: 11px;
-    color: var(--muted);
-  }
+  .charts-row { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 14px; margin-bottom: 1.5rem; }
+  .trend-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.5rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
+  .card-title { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; font-size: 11px; color: var(--muted); }
   .legend span { display: flex; align-items: center; gap: 5px; }
   .ldot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
-  .ai-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .ai-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .ai-title .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2s infinite;
-  }
+  .ai-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
+  .ai-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .ai-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-  .chip {
-    font-size: 12px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .chip { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); cursor: pointer; transition: all 0.15s; }
   .chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,0.08); }
   .ai-input-row { display: flex; gap: 8px; }
-  .ai-input-row input {
-    flex: 1;
-    font-size: 13px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    outline: none;
-    transition: border 0.15s;
-    font-family: 'Inter', sans-serif;
-  }
+  .ai-input-row input { flex: 1; font-size: 13px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); outline: none; transition: border 0.15s; font-family: 'Inter', sans-serif; }
   .ai-input-row input:focus { border-color: var(--accent); }
-  .ai-input-row button {
-    font-size: 12px;
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: 1px solid rgba(79,142,247,0.4);
-    background: rgba(79,142,247,0.12);
-    color: var(--accent);
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.15s;
-    font-family: 'Inter', sans-serif;
-  }
+  .ai-input-row button { font-size: 12px; padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(79,142,247,0.4); background: rgba(79,142,247,0.12); color: var(--accent); cursor: pointer; font-weight: 500; transition: all 0.15s; font-family: 'Inter', sans-serif; }
   .ai-input-row button:hover { background: rgba(79,142,247,0.2); }
-  .ai-response {
-    margin-top: 14px;
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.7;
-    display: none;
-    background: var(--surface2);
-    border-radius: 10px;
-    padding: 14px;
-    border-left: 3px solid var(--accent);
-  }
+  .ai-response { margin-top: 14px; font-size: 13px; color: var(--text); line-height: 1.7; display: none; background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 3px solid var(--accent); }
   .ai-response.visible { display: block; }
   .loading-dots { display: inline-flex; gap: 4px; }
-  .loading-dots span {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--muted);
-    animation: bounce 1s infinite;
-  }
+  .loading-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: bounce 1s infinite; }
   .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
-  footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 11px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
+  footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); }
   @media (max-width: 768px) {
     .metrics { grid-template-columns: 1fr 1fr; }
     .charts-row, .trend-row { grid-template-columns: 1fr; }
@@ -239,7 +85,6 @@
 </header>
 
 <main>
-
   <div class="filter-bar">
     <label>Year range:</label>
     <select id="yearSel" onchange="updateCharts()">
@@ -343,11 +188,10 @@
     </div>
     <div class="ai-response" id="aiResp"></div>
   </div>
-
 </main>
 
 <footer>
-  Data sourced from US Courts Annual Statistical Reports (uscourts.gov) · Built with Chart.js + Claude API · MIT License
+  Data sourced from US Courts Annual Statistical Reports (uscourts.gov) · Built with Chart.js + AI Insights · MIT License
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -357,6 +201,61 @@ const DATA = {
   recent: { labels:['2021','2022','2023'], civil:[298,310,287], criminal:[68,73,71], bankruptcy:[413,389,418] },
   pre:    { labels:['2018','2019','2020'], civil:[273,279,261], criminal:[82,79,64], bankruptcy:[773,752,757] }
 };
+
+const ANSWERS = [
+  {
+    keys: ['civil rights','2020','spike','protest','george floyd','blm'],
+    answer: "Civil rights filings surged nearly 18% between 2020 and 2022, driven largely by a wave of police misconduct lawsuits following the nationwide protests of summer 2020. Courts saw unprecedented volumes of Section 1983 claims — the federal statute used to sue government officials for constitutional violations. This trend reflects both heightened public awareness of civil rights law and increased willingness by plaintiffs to pursue federal remedies."
+  },
+  {
+    keys: ['criminal','decline','civil','rise','trend','why','difference'],
+    answer: "The divergence between rising civil filings and declining criminal filings reflects two separate dynamics. On the criminal side, federal prosecutors have become more selective post-COVID, prioritizing high-impact cases like fraud and trafficking over lower-level drug offenses as sentencing reform efforts reduced mandatory minimums. Civil filings, meanwhile, have grown because of expanded consumer protection litigation, increased employment discrimination claims, and a rise in complex commercial contract disputes following pandemic-era business disruptions."
+  },
+  {
+    keys: ['dismissal','dismiss','settle','settlement','high rate','70%','outcome'],
+    answer: "The fact that roughly 70% of federal cases are settled or dismissed before trial is a feature, not a flaw, of the federal court system. Federal litigation is expensive and discovery-intensive, which creates strong financial incentives for parties to resolve disputes early. It also reflects the court system functioning as a credible threat — the mere filing of a federal complaint often brings defendants to the negotiating table. Only about 4% of cases ever reach a jury or bench verdict."
+  },
+  {
+    keys: ['immigration','criminal','docket','border','illegal','undocumented'],
+    answer: "Immigration cases represent the second-largest category of federal criminal filings at 18,200 cases in 2023, making up roughly 26% of the entire criminal docket. This reflects federal jurisdiction over border-crossing offenses, visa fraud, and unlawful reentry charges. Surges in border activity directly translate to spikes in federal criminal caseloads, particularly in districts along the southern border like the Southern District of Texas and the District of Arizona, which rank among the busiest federal courts in the country."
+  },
+  {
+    keys: ['bankruptcy','drop','covid','stimulus','2021','pandemic'],
+    answer: "Bankruptcy filings dropped dramatically from 773K in 2018 to just 413K in 2021 — a 47% decline — which seems counterintuitive given the economic disruption of COVID-19. The explanation lies in federal stimulus: the CARES Act, PPP loans, enhanced unemployment benefits, and eviction moratoriums provided a financial cushion that kept individuals and businesses solvent through the crisis. As those programs wound down, filings began a slow recovery, though they have not returned to pre-pandemic levels."
+  },
+  {
+    keys: ['drug','drug offense','narcotics','controlled substance'],
+    answer: "Drug offenses remain the single largest category of federal criminal filings at 23,400 cases in 2023, though the composition has shifted significantly over the past decade. Fentanyl and synthetic opioid trafficking prosecutions have surged while marijuana-related cases have fallen sharply, reflecting both state-level legalization trends and DOJ prosecutorial priorities. Federal drug cases carry significant mandatory minimums, contributing to the federal prison population being roughly 45% drug offenders."
+  },
+  {
+    keys: ['fraud','financial','white collar','financial crime'],
+    answer: "Fraud and financial crimes account for 10,800 federal criminal filings annually, making it the third-largest category. Federal prosecutors hold exclusive or primary jurisdiction over wire fraud, securities fraud, bank fraud, and tax evasion — offenses that cross state lines or involve federally regulated institutions. Post-2020, COVID relief fraud (PPP loan fraud, unemployment insurance fraud) added a significant wave of new prosecutions, with the DOJ recovering over $1.4 billion in COVID fraud cases by 2023."
+  },
+  {
+    keys: ['contract','tort','labor','civil breakdown','civil type'],
+    answer: "The civil docket is dominated by contract disputes at 31%, reflecting the federal courts' role in resolving commercial disagreements where parties are from different states (diversity jurisdiction). Tort cases at 24% include personal injury, product liability, and mass tort litigation. The 20% share for civil rights cases is notably high and has grown steadily since 2016, while labor and employment cases at 15% cover FLSA wage claims, EEOC discrimination suits, and ERISA pension disputes."
+  }
+];
+
+const DEFAULT_ANSWERS = [
+  "Based on the data in this dashboard, federal court filings have remained relatively stable over the 2018–2023 period, with the most significant disruption being the dramatic drop in bankruptcy filings following COVID-19 stimulus programs. Civil filings have trended upward while criminal filings have slightly declined, suggesting shifting prosecutorial priorities and increased civil litigation activity.",
+  "That's an interesting angle on the data. The federal court system processes over 400,000 civil and criminal cases annually, with the vast majority resolved through settlement or dismissal rather than trial. This reflects both the cost of federal litigation and the courts' function as a credible enforcement mechanism that incentivizes early resolution.",
+  "Looking at the trends across 2018–2023, the data shows the federal judiciary adapting to significant external pressures — from the COVID-19 pandemic to shifting enforcement priorities. Civil rights and commercial litigation have grown while some traditional criminal categories have contracted, reflecting broader changes in both law and society.",
+  "The dashboard data points to a federal court system under steady demand. With 421K civil and criminal filings in 2023 alone — plus 418K bankruptcy cases — the courts handle enormous volume, most of it never reaching trial. Dispositions data shows that efficiency through settlement is a structural feature of federal litigation, not an exception."
+];
+
+function findAnswer(question) {
+  const q = question.toLowerCase();
+  for (const entry of ANSWERS) {
+    if (entry.keys.some(k => q.includes(k))) return entry.answer;
+  }
+  return DEFAULT_ANSWERS[Math.floor(Math.random() * DEFAULT_ANSWERS.length)];
+}
+
+function simulateThink(callback) {
+  const delay = 800 + Math.random() * 700;
+  setTimeout(callback, delay);
+}
 
 let lineC, donutC, barC, dispC;
 
@@ -451,7 +350,7 @@ mkDonut();
 mkBar();
 mkDisp();
 
-async function askAI(q) {
+function askAI(q) {
   const input = document.getElementById('aiQ');
   const question = q || input.value.trim();
   if (!question) return;
@@ -459,33 +358,9 @@ async function askAI(q) {
   const resp = document.getElementById('aiResp');
   resp.className = 'ai-response visible';
   resp.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
-
-  const context = `You are an expert legal data analyst. The user is viewing a dashboard of US federal court statistics:
-- 2023 total filings: ~421K civil+criminal, plus ~418K bankruptcy
-- Civil: 287K (up 5.1%), Criminal: 71K (down 1.8%), Bankruptcy: 418K (down 4.2%)
-- Civil breakdown: Contract 31%, Tort 24%, Civil rights 20%, Labor 15%, Other 10%
-- Criminal categories: Drug offenses 23.4K, Immigration 18.2K, Fraud 10.8K, Firearms 7.6K, Violent crime 5.4K
-- Dispositions: ~70% settled/dismissed, ~4% trial verdict, ~13% default judgment
-- Trend: civil rising, criminal declining, bankruptcy dropped post-2020 due to COVID stimulus
-Answer concisely in 2-4 sentences. Be insightful and data-driven.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: context,
-        messages: [{ role: 'user', content: question }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.find(b => b.type === 'text')?.text || 'No response received.';
-    resp.textContent = text;
-  } catch(e) {
-    resp.textContent = 'Could not reach the AI service. Please try again.';
-  }
+  simulateThink(() => {
+    resp.textContent = findAnswer(question);
+  });
 }
 </script>
 </body>
